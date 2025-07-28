@@ -89,8 +89,8 @@ cdef class RdKafkaProducer:
         err = crdk.rd_kafka_flush(self.producer, timeout * 1000)
         if err != crdk.RD_KAFKA_RESP_ERR_NO_ERROR:
             err_str = bytes(crdk.rd_kafka_err2str(err)).decode()
-            logger.error(f"Timeout occurred waiting to deliver all the "
-                         f"remaining messages")
+            logger.error(f"Error occurred waiting to deliver all the "
+                         f"remaining messages: {err_str}")
         for topic in self.topics.values():
             logger.info(f"Destroying rd kafka topic {topic.name}")
             rdk_topic = self._get_rdk_topic(topic)

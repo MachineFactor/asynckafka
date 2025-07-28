@@ -1,9 +1,22 @@
 # coding=utf-8
 import os
 import sys
+import platform
+
+# to make build use librdkafka installed by homebrew
+if platform.system() == 'Darwin':  # macOS
+    homebrew_prefix = '/opt/homebrew'  #  Apple Silicon
+    if not os.path.exists(homebrew_prefix):
+        homebrew_prefix = '/usr/local'  #  Intel Mac
+    
+    if os.path.exists(homebrew_prefix):
+        os.environ.setdefault('LDFLAGS', f'-L{homebrew_prefix}/lib')
+        os.environ.setdefault('CPPFLAGS', f'-I{homebrew_prefix}/include')
+        os.environ.setdefault('PKG_CONFIG_PATH', f'{homebrew_prefix}/lib/pkgconfig')
 
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
+from Cython.Build import cythonize
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as f:
     readme = f.read()
@@ -170,15 +183,13 @@ setup(
         version=version
     ),
     cmdclass=LazyCommandClass(),
-    setup_requires=['cython'],
+    setup_requires=['cython', 'Cython>=3.0.0'],
     install_requires=[],
-    ext_modules=module_list,
+    ext_modules=cythonize(module_list),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.12',
         'Intended Audience :: Developers',
         'Framework :: AsyncIO'
     ],
