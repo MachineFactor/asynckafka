@@ -13,7 +13,8 @@ _error_callback = None
 _name_to_callback_error = {}
 
 
-cdef void cb_logger(const crdk.rd_kafka_t *rk, int level, const char *fac, const char *buf) noexcept:
+# XXX: beware - logging acquires GIL !
+cdef void cb_logger(const crdk.rd_kafka_t *rk, int level, const char *fac, const char *buf) noexcept with gil:
     fac_str = bytes(fac).decode()
     buf_str = bytes(buf).decode()
     if level in {1, 2}:

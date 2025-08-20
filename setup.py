@@ -21,9 +21,9 @@ from Cython.Build import cythonize
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as f:
     readme = f.read()
 
-version = '0.2.0'
+version = '0.3.1'
 module_name = 'asynckafka'
-github_username = 'jmf-mordis'
+github_username = 'random-ua'
 language_level = '3'
 
 extensions = [
