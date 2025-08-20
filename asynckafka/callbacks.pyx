@@ -12,15 +12,13 @@ logger = logging.getLogger('asynckafka')
 _error_callback = None
 _name_to_callback_error = {}
 
-
-# XXX: beware - logging acquires GIL !
-cdef void cb_logger(const crdk.rd_kafka_t *rk, int level, const char *fac, const char *buf) noexcept with gil:
+cdef void cb_logger(const crdk.rd_kafka_t *rk, int level, const char *fac, const char *buf) noexcept:
     fac_str = bytes(fac).decode()
     buf_str = bytes(buf).decode()
     if level in {1, 2}:
         logger.critical(f"{fac_str}:{buf_str}")
     elif level == 3:
-        logger.error(f"{fac_str}:{buf_str)}")
+        logger.error(f"{fac_str}:{buf_str}")
     elif level in {4, 5}:
         logger.info(f"{fac_str}:{buf_str}")
     elif level in {6, 7}:

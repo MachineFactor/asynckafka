@@ -20,6 +20,10 @@ cdef class RdKafkaConsumer:
         consumer_config = consumer_config if consumer_config else {}
         consumer_config['group.id'] = group_id if group_id else \
             "default_consumer_group"
+
+        if "log.queue" not in consumer_config:
+            consumer_config["log.queue"] = "true"
+
         self.consumer_config = utils.parse_and_encode_settings(
             consumer_config)
 

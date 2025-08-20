@@ -19,6 +19,10 @@ cdef class RdKafkaProducer:
 
         producer_config = producer_config if producer_config else {}
         producer_config['bootstrap.servers'] = brokers
+
+        if "log.queue" not in producer_config:
+            producer_config["log.queue"] = "true"
+
         self.producer_config = utils.parse_and_encode_settings(
             producer_config
         )

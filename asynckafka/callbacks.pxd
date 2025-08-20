@@ -6,7 +6,7 @@ cdef void cb_logger(
         int level,
         const char *fac,
         const char *buf
-) noexcept with gil
+) noexcept
 
 
 cdef void cb_error(
