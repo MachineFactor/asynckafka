@@ -1,5 +1,5 @@
-CONSUMER_RD_KAFKA_POLL_PERIOD_SECONDS = 0.1
-PRODUCER_RD_KAFKA_POLL_PERIOD_SECONDS = 0.1
+CONSUMER_RD_KAFKA_POLL_PERIOD_SECONDS = 0.001  # 1ms instead of 100ms for better performance
+PRODUCER_RD_KAFKA_POLL_PERIOD_SECONDS = 0.001  # 1ms instead of 100ms for better performance
 
 cdef char debug = 0
 
